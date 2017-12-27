@@ -32,7 +32,9 @@ module.exports = {
     devtool: 'cheap-module-eval-source-map',
     // Configuracion del WebDevServer como remplazo a live-server
     devServer: {
-        contentBase: path.join(__dirname,'public')
+        contentBase: path.join(__dirname,'public'),
+        // Establece que el routing sea client side (para dev)
+        historyApiFallback: true
     }
 };
 
