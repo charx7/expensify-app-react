@@ -20,7 +20,7 @@ const AppRouter = () => (
                 <Route path = '/' component = {GastoDashboardPagina} exact = {true}/>
                 <Route path= "/crear" component ={CrearGastoPagina}/>
                 {/* Ruta de editar gasto*/}
-                <Route path= "/editar" component ={EditarGastoPagina}/>
+                <Route path= "/editar/:id" component ={EditarGastoPagina}/>
                 {/* Ruta de aiuda*/}
                 <Route path= "/ayuda" component ={AyudaPagina}/>
                 {/* Ruta para 404*/}
