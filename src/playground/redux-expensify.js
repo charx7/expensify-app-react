@@ -144,7 +144,6 @@ const reductorFiltros = (estado = reductorFiltrosDefault, accion) => {
 
 // Timestapms en milisegundos desde midnight 1970
 
-
 // Obtener los gastos visibles
 const obtenerGastosVisibles = (gastos, {texto, ordenarPor, fechaInicio, fechaFinal}) => {
     // Hacemos un llamado al metodo filter de los arreglos para determinar que elementos debemos mostrar
