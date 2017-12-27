@@ -17,3 +17,8 @@ button:disabled {
     // Para que no aparezca la manita cuando esta deshabilitado
     cursor: default;
 }
+
+// Clase de estilo de link Activo
+.esta-activo {
+    font-weight: bold;
+}
