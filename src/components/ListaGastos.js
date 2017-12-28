@@ -17,6 +17,7 @@ const ListaGastos = (props) => (
                         currentDescripcion = {elemento.descripcion}
                         currentMonto = {elemento.monto}
                         currentCreadoEn = {elemento.creadoEn}
+                        currentId = {elemento.id}
                         />
             })
         }
