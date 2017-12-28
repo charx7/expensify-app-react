@@ -11,6 +11,7 @@ const ListaGastoItem = (props) => (
         <p> El monto del gasto es {props.currentMonto} = Creado en: {props.currentCreadoEn} </p>
         <button 
             onClick = { () => {
+                console.log(props.key) // INVESTIGAR PORQUE SALE INDEFINIDO
                 props.dispatch(removerGasto({id: props.currentId}));
             }} 
         >

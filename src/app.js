@@ -16,8 +16,9 @@ const almacen = configuraAlmacen();
 // Agregar dos Gastos
 // Agregamos una serie de gastos ejemplo .displatch crea un objeto de accion
 const gastoUno = almacen.dispatch(agregarGasto({ descripcion: 'Water bill', monto: 100, creadoEn: -21000 }));
-const gastoDos = almacen.dispatch(agregarGasto({ descripcion: 'Gas bill', monto: 200, creadoEn: -21000 }));
-almacen.dispatch(setFiltroTexto('bill'));
+const gastoDos = almacen.dispatch(agregarGasto({ descripcion: 'Gas bill', monto: 200, creadoEn: 1000 }));
+const gastoTres = almacen.dispatch(agregarGasto({ descripcion: 'Renta', monto: 1095, creadoEn: 1000 }));
+//almacen.dispatch(setFiltroTexto('bill'));
 // Verificamos el estado en la consola despues de los dispatches
 console.log(almacen.getState());
 
