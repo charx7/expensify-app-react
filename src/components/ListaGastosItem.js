@@ -8,7 +8,7 @@ import { removerGasto } from '../acciones/gastos'; // Importador de acciones de 
 const ListaGastoItem = (props) => (
     <div>
         <h3>{props.currentDescripcion}</h3>
-        <p> El monto del gasto es {props.currentMonto} = Creado en: {props.currentCreadoEn} </p>
+        <p> El monto del gasto es {props.currentMonto} - Creado en: {props.currentCreadoEn} </p>
         <button 
             onClick = { () => {
                 console.log(props.key) // INVESTIGAR PORQUE SALE INDEFINIDO
