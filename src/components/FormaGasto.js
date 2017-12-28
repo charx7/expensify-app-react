@@ -1,5 +1,13 @@
 // Archivo que contiene la logica de la forma para editar o crear un gasto
+import "react-dates/initialize"; // Importacion nueva necesaria para que sirva el calendario
 import React from  'react';
+import moment from 'moment'; // Importacion de momentos
+import { SingleDatePicker } from 'react-dates'; // Importacion de React Dates
+import 'react-dates/lib/css/_datepicker.css' // Importacion del CSS
+
+// Creamos un objeto de la libreria moment
+const now = moment();
+console.log(now.format('MMM Do, YYYY'));
 
 // Componente de clase
 export default class FormaGasto extends React.Component{
@@ -7,7 +15,9 @@ export default class FormaGasto extends React.Component{
     state = {
         descripcion: '',
         nota: '',
-        monto: ''
+        monto: '',
+        creadoEn: moment(),
+        calendarFocused: false
     };
     // Metodo que se encarga de cambiar el estado de descripcion del componente
     cambioDescripcion = (e) => {
@@ -35,7 +45,15 @@ export default class FormaGasto extends React.Component{
             // Cambio del estado
             this.setState( () => ({ monto: montoForma}));
         }
-    } 
+    };
+    // Metodo que se encarga de manipular el estado de Fecha segun el calendario chevere de la libreria 3rd party
+    cambioFecha = (creadoEnForma) => {
+        this.setState(() => ({ creadoEn: creadoEnForma }));
+    };
+    // Metodo de cambio de focus cuando se manipula el calendarito chevere
+    enCambioCalendarFocused = ({ focused }) => {
+        this.setState( () => ({ calendarFocused: focused }));
+    };
     // Rendereo del componente
     render () {
         return (
@@ -61,6 +79,16 @@ export default class FormaGasto extends React.Component{
                 </textarea>
                 <button>Agregar Gasto</button>
             </form>
+            {/* Importaciones del componente de Single date picker de react-dates*/}
+            <SingleDatePicker
+                // Props necesarios para que funcione el calendario
+                date = {this.state.creadoEn}
+                onDateChange = {this.cambioFecha}
+                focused = {this.state.calendarFocused}
+                onFocusChange = {this.enCambioCalendarFocused}
+                numberOfMonths = {1}
+                isOutsideRange = {(day) => false }
+            />
         </div>
         )
     }
