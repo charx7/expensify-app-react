@@ -11,15 +11,20 @@ console.log(now.format('MMM Do, YYYY'));
 
 // Componente de clase
 export default class FormaGasto extends React.Component{
-    // Estado del componente que mantiene track de los cambios de los inputs y el textarea
-    state = {
-        descripcion: '',
-        nota: '',
-        monto: '',
-        creadoEn: moment(),
-        calendarFocused: false,
-        error: ''
-    };
+    // Override al constructor
+    constructor(props) {
+        // Llamamos al constructor de la clase padre
+        super(props);
+        // Estado del componente que mantiene track de los cambios de los inputs y el textarea
+        this.state = {
+            descripcion: props.gastoEditar ? props.gastoEditar.descripcion : '',
+            nota: props.gastoEditar ? props.gastoEditar.nota : '',
+            monto: props.gastoEditar ? (props.gastoEditar.monto /100).toString() : '',
+            creadoEn: props.gastoEditar ? moment(props.gastoEditar.creadoEn) : moment(),
+            calendarFocused: false,
+            error: ''
+        }; 
+    }
     // Metodo que se encarga de cambiar el estado de descripcion del componente
     cambioDescripcion = (e) => {
         // Recupera el valor del input de texto de descripcion

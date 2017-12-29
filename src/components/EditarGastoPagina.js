@@ -3,13 +3,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // Importacion de connect de React redux
 import { connect } from 'react-redux';
+import FormaGasto from  './FormaGasto'; // Importamos la forma de gasto
 
 // Componente de Editar Gasto
 const EditarGastoPagina = (props) => {
-    console.log(props);
     return (
         <div>
             Editando el Gasto con ID de {props.match.params.id}
+            <FormaGasto
+                gastoEditar = {props.gasto} 
+                onSubmit = {(gasto) => {
+                    console.log('editado ', gasto)
+                }}
+            />
         </div>
     );
 };
