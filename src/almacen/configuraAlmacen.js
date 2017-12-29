@@ -12,7 +12,9 @@ export default () => {
             // Le asignamos un reductor especifico
             gastos: reductorGastos,
             filtros: reductorFiltros
-        })
+        }), 
+        // Linea para configurar las Redux Dev tools
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     );
 
     // Para definir que vamos a exportar nuestro Store(almacen)
