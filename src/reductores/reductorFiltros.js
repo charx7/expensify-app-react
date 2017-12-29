@@ -1,10 +1,12 @@
+import moment from  'moment'; // Importaciones de la libreria de moment
+
 // Reductor de los filtros
 // Definimos el estado default del estado del modelo de filtros definido abajo
 const reductorFiltrosDefault = {
     texto: '',
     ordenarPor: 'FECHA',
-    fechaInicio: undefined,
-    fechaFinal: undefined
+    fechaInicio: moment().startOf('month'),
+    fechaFinal: moment().endOf('month')
 }
 // Definimos la funcion pura del reductor
 const reductorFiltros = (estado = reductorFiltrosDefault, accion) => {
