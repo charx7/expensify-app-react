@@ -12,6 +12,7 @@ const ListaGastoItem = (props) => (
             <h3>{props.currentDescripcion}</h3>
         </Link>
         <p> El monto del gasto es {props.currentMonto} - Creado en: {props.currentCreadoEn} </p>
+        {/* MARCADO COMO COMENTARIO PORQUE FUE MOVIDO AL COMPONENTE DE EDITAR         
         <button 
             onClick = { () => {
                 console.log(props.key) // INVESTIGAR PORQUE SALE INDEFINIDO
@@ -20,6 +21,7 @@ const ListaGastoItem = (props) => (
         >
             Eliminar
         </button>
+        */}
     </div>
 );
 
