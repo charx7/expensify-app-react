@@ -1,10 +1,14 @@
 // Importacion del modulo de path para la configuracion de webpack
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = (env) => {
     // Verifica si el build es de produccion
     const esProduccion = env === 'production';
+    // Para el Css extract
+    const CSSExtract = new ExtractTextPlugin('styles.css');
     console.log('env ', env); 
+
     return {
         // Donde WebPack debe buscar el archivo de entrada
         entry: './src/app.js',
@@ -25,15 +29,29 @@ module.exports = (env) => {
                 //Reglas para seleccionar todos los archivos que terminan en .scss y se tranformen
                 test: /\.s?css$/,
                 // Establecemos los loaders de SCSS que convierten en CSS
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader'
-                ]
+                use: CSSExtract.extract({
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: true
+                            } 
+                        },{
+                            loader: 'sass-loader',
+                            options: {
+                                sourceMap: true
+                            }
+                        }
+                    ]
+                })
             }]
         },
+        // Definimos los plugins de webpack
+        plugins: [
+            CSSExtract
+        ],
         // Devtools para debugear sin pasar por el codigo del bundle.js cambia si el build es de prod o de dev
-        devtool: esProduccion ? 'source-map' : 'cheap-module-eval-source-map',
+        devtool: esProduccion ? 'source-map' : 'inline-source-map',
         // Configuracion del WebDevServer como remplazo a live-server
         devServer: {
             contentBase: path.join(__dirname,'public'),

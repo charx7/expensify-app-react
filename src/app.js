@@ -2,8 +2,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import 'normalize.css/normalize.css'; // Reseteo de los estilos de CSS con la nueva libreria
 import './styles/styles.scss'; // Importacion de los archivos de CSS
-import 'normalize.css/normalize.css'; // Reseteo de los estilos de CSS con la nueva libreria 
+import 'react-dates/lib/css/_datepicker.css'; // Importaciones de estilo del calendario para date-picking
+import "react-dates/initialize"; // Importacion nueva necesaria para que sirva el calendario
 import AppRouter from './routers/AppRouter';
 import configuraAlmacen from './almacen/configuraAlmacen'; // Importacion del Almacen REDUX y su modelo con reducers
 import { agregarGasto } from './acciones/gastos'; // Importaciones de acciones de gastos
