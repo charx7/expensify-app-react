@@ -6,6 +6,8 @@ const express = require('express');
 const app = express();
 // Establecemos el path de la app le decimos que en el directorio publico se encuentran todos nuestros assets
 const publicPath = path.join(__dirname, '..', 'public');
+// Para establecer que puerto va a correr nuestra app
+const puertoEnv = process.env.PORT || 3000;
 
 app.use(express.static(publicPath));
 
@@ -16,6 +18,6 @@ app.get('*', (request, response) => {
 });
 
 // Inicializamos el servidor en el puerto 3000
-app.listen(3000, () => {
-    console.log('Servidor corriendo en 3000');
+app.listen(puertoEnv, () => {
+    console.log('Servidor corriendo en ' + puertoEnv);
 });
