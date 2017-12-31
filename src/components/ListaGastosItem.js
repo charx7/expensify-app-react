@@ -14,7 +14,7 @@ const ListaGastoItem = (props) => (
             <h3>{props.currentDescripcion}</h3>
         </Link>
         <p> 
-            El monto del gasto es {numeral(props.currentMonto / 100).format('$0,0.00')} - {' '}
+            El monto del gasto es {numeral(props.currentMonto / 100).format('$0,0.[00]')} - {' '}
             Creado en: {moment(props.currentCreadoEn).format('MMMM Do, YYYY')} 
         </p>
         {/* MARCADO COMO COMENTARIO PORQUE FUE MOVIDO AL COMPONENTE DE EDITAR         
