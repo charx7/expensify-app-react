@@ -5,7 +5,7 @@ import sumaGastosVisibles from '../selectores/gastosTotales'; // Importacion del
 import numeral from 'numeral'; // Importaciones de node_modules para formato de montos
 
 // Creamos un componente de clase 
-const DesplegadoSumaGastos = (props) => (
+export const DesplegadoSumaGastos = (props) => (
     <div>
         {/* Aca va el reesultado de la suma de los gasot*/}
         <p>
