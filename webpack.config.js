@@ -14,7 +14,7 @@ module.exports = (env) => {
         entry: './src/app.js',
         // Donde va el archivo de salida
         output: {
-            path: path.join(__dirname,'public'),
+            path: path.join(__dirname,'public', 'dist'),
             filename: 'bundle.js'
         },
         // Configuracion del loader
@@ -56,7 +56,9 @@ module.exports = (env) => {
         devServer: {
             contentBase: path.join(__dirname,'public'),
             // Establece que el routing sea client side (para dev)
-            historyApiFallback: true
+            historyApiFallback: true,
+            // Donde estan los assets
+            publicPath: '/dist/'
         }
     }
 };
