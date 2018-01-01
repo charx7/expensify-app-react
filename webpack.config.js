@@ -1,6 +1,17 @@
 // Importacion del modulo de path para la configuracion de webpack
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
+// Variables de ambiente en heroku es produccion en jest es test y si no es development
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+if(process.env.NODE_ENV === 'test') {
+    // Linea que jala el paquete de dotenv para configurar las variables de ambiente
+    require('dotenv').config({ path: '.env.test' });
+} else if (process.env.NODE_ENV === 'development') {
+    // Linea que jala el paquete de dotenv para configurar las variables de ambiente
+    require('dotenv').config({ path: '.env.development' });
+}
 
 module.exports = (env) => {
     // Verifica si el build es de produccion
@@ -48,7 +59,15 @@ module.exports = (env) => {
         },
         // Definimos los plugins de webpack
         plugins: [
-            CSSExtract
+            CSSExtract,
+            new webpack.DefinePlugin({
+                'process.env.FIREBASE_API_KEY': JSON.stringify(process.env.FIREBASE_API_KEY),
+                'process.env.FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
+                'process.env.FIREBASE_DATABASE_URL': JSON.stringify(process.env.FIREBASE_DATABASE_URL),
+                'process.env.FIREBASE_PROJECT_ID': JSON.stringify(process.env.PROJECT_ID),
+                'process.env.FIREBASE_STORAGE_BUCKET': JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
+                'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID)
+            })
         ],
         // Devtools para debugear sin pasar por el codigo del bundle.js cambia si el build es de prod o de dev
         devtool: esProduccion ? 'source-map' : 'inline-source-map',

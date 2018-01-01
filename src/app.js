@@ -11,6 +11,7 @@ import configuraAlmacen from './almacen/configuraAlmacen'; // Importacion del Al
 import { agregarGasto } from './acciones/gastos'; // Importaciones de acciones de gastos
 import { setFiltroTexto } from './acciones/filtros';
 import obtenerGastosVisibles from './selectores/selectorGastos'; // Importacion de la funcion que muestra los gastos visibles
+import './firebase/firebase'; // Importaciones de Firebase para que corra
 
 // acceso al modelo del almacen con REDUX
 const almacen = configuraAlmacen();
