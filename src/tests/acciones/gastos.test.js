@@ -1,5 +1,11 @@
 // Importamos las funciones que queremos testear
-import { agregarGasto, removerGasto, editarGasto, empiezaAgregaGasto, setGastos, empiezaSetGastos } from '../../acciones/gastos';
+import { agregarGasto, 
+        removerGasto, 
+        editarGasto, 
+        empiezaAgregaGasto, 
+        setGastos,
+        empiezaSetGastos, 
+        empiezaRemoverGasto } from '../../acciones/gastos';
 import thunk from 'redux-thunk'; // Importaciones del middleware de redux
 import configureMockStore from 'redux-mock-store'; // Importaciones de modulos de testeo para redux
 import database from '../../firebase/firebase'; // Importamos el modulo de firebase para hacer un query
@@ -122,6 +128,25 @@ test('Deberia de obtener los datos de gastos de firebase', (done) => {
         done(); 
     });
 
+});
+
+test('Deberia remover un elemento de gasto de firebase', (done) => {
+    // Crea un almacen mock
+    const almacen = creaAlmacenMock({});
+    const id = gastosDummy[2].id
+    // Llamamos la async task y le pasamos el objeto con id de arriba
+    almacen.dispatch(empiezaRemoverGasto({ id })).then(() => {
+        const acciones = almacen.getActions();
+        expect(acciones[0]).toEqual({
+            type: 'REMOVER_GASTO',
+            idQuitar: id
+        });
+        return database.ref(`gastos/${id}`).once('value');
+    }).then( (snapshot) => {
+        // Esperamos que el valor de id que quitamos sea falso porque ya no esta en la BDD
+        expect(snapshot.val()).toBeFalsy();
+        done();
+    });
 });
 
 // Hace falta hacer un default en el que se pasa un objeto vacio para verificar si corren los objetos vacios

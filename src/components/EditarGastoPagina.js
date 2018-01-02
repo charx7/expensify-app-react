@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 // Importacion de connect de React redux
 import { connect } from 'react-redux';
 import FormaGasto from  './FormaGasto'; // Importamos la forma de gasto
-import { editarGasto, removerGasto } from '../acciones/gastos'; // Importamos la accion de editar gasto
+import { editarGasto, empiezaRemoverGasto } from '../acciones/gastos'; // Importamos la accion de editar gasto
 
 // Componente de Editar Gasto
 const EditarGastoPagina = (props) => {
@@ -24,7 +24,7 @@ const EditarGastoPagina = (props) => {
             <button 
                 onClick = { () => {
                     // Llamado a la accion que remueve un gasto del almacen
-                    props.dispatch(removerGasto({id: props.match.params.id}));
+                    props.dispatch(empiezaRemoverGasto({id: props.match.params.id}));
                     // Redirigir a la pagina de Dashboard
                     props.history.push('/');
                 }}

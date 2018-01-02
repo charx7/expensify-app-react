@@ -60,7 +60,7 @@ export const setGastos = (gastos) => ({
 // Codigo que se encarga de hacer query a la BDD de firebase y devuelve los datos
 export const empiezaSetGastos = () => {
     return (dispatch) => {
-        // Hacemo un query a la BDD de FB
+        // Hacemos un query a la BDD de FB
         return database.ref('gastos').once('value').then((query) => {
             // Construimos un arreglo vacio con el que se van a ir almacenando los datos de firebase
             const datosQueryGastos = [];
@@ -80,4 +80,18 @@ export const empiezaSetGastos = () => {
             dispatch(setGastos(datosQueryGastos));
         });
     }
+};
+
+// Codigo que se encarga de hacer query a la BDD de firebase de remover un dato
+export const empiezaRemoverGasto = ({ id: idQuitar } = {}) => {
+    console.log("Id a quitar es: ", idQuitar);
+    // Le decimos que la funcion regrese un objeto de dispatch
+    return (dispatch) => {
+        // Hacemos query al elemento de FB que nos interesa remover el return es para que regrese una promisa que
+        // podamos manejar
+        return database.ref(`gastos/${idQuitar}`).remove().then(() => {
+            //console.log("Id a quitar es: ",idQuitar);
+            dispatch(removerGasto({ id:idQuitar }));
+        }); 
+    };
 };
