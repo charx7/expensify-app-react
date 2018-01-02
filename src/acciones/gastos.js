@@ -50,3 +50,34 @@ export const editarGasto = (id, actualizaciones) => ({
     id,
     actualizaciones
 });
+
+// Accion que manipula el redux-store
+export const setGastos = (gastos) => ({
+    type: 'SET_GASTOS',
+    gastos
+});
+
+// Codigo que se encarga de hacer query a la BDD de firebase y devuelve los datos
+export const empiezaSetGastos = () => {
+    return (dispatch) => {
+        // Hacemo un query a la BDD de FB
+        return database.ref('gastos').once('value').then((query) => {
+            // Construimos un arreglo vacio con el que se van a ir almacenando los datos de firebase
+            const datosQueryGastos = [];
+            // Loopeamos a traves de los elementos obtenidos en el query
+            query.forEach((elementoHijo) => {
+                // Por cada elemento que obtuvimos hacemos un push al arreglo de gastos
+                datosQueryGastos.push({
+                    // Sacamos el id de firebase
+                    id: elementoHijo.key,
+                    // los ... hacen referencia todos los elementos anidados del objeto
+                    ...elementoHijo.val()
+                });
+            });
+            // Para ver que escupe la consola
+            console.log('Los datos del query son: ',datosQueryGastos); 
+            // Llamo a la accion que modifica al almacen despues de que se termina el asyc
+            dispatch(setGastos(datosQueryGastos));
+        });
+    }
+};

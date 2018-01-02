@@ -8,7 +8,7 @@ import 'react-dates/lib/css/_datepicker.css'; // Importaciones de estilo del cal
 import "react-dates/initialize"; // Importacion nueva necesaria para que sirva el calendario
 import AppRouter from './routers/AppRouter';
 import configuraAlmacen from './almacen/configuraAlmacen'; // Importacion del Almacen REDUX y su modelo con reducers
-import { agregarGasto } from './acciones/gastos'; // Importaciones de acciones de gastos
+import { agregarGasto, empiezaSetGastos } from './acciones/gastos'; // Importaciones de acciones de gastos Agregar y Setear con datos de la BDD
 import { setFiltroTexto } from './acciones/filtros';
 import obtenerGastosVisibles from './selectores/selectorGastos'; // Importacion de la funcion que muestra los gastos visibles
 import './firebase/firebase'; // Importaciones de Firebase para que corra
@@ -31,6 +31,10 @@ const estado = almacen.getState();
 const gastosVisibles = obtenerGastosVisibles(estado.gastos, estado.filtros);
 console.log(gastosVisibles);
 
+// =========================================================================
+// =======CODIGO IMPORTANTE DE LA APP LO DE ARRIBA ES PARA TESTEO===========
+// =========================================================================
+
 const jsx  = (
     /* Usamos el componente de Provider de React-Redux para pasarle el almacen a todos nuestros componentes como prop */
     <Provider store={almacen} >
@@ -38,5 +42,11 @@ const jsx  = (
     </Provider>
 );
 
-// Rendereo de toda la aplicacion usando el componente padre IndecisionApp
-ReactDOM.render(jsx, document.getElementById('app'));
+// Rendereo de un mensaje de cargando...
+ReactDOM.render(<p>Cargando...</p>, document.getElementById('app'));
+
+almacen.dispatch(empiezaSetGastos()).then(() => { 
+    // Esta accion se renderea cuando hay un exito en el async task de recuperar los datos de firebase
+    // Rendereo de toda la aplicacion usando el componente padre IndecisionApp
+    ReactDOM.render(jsx, document.getElementById('app'));
+});

@@ -1,11 +1,25 @@
 // Importamos las funciones que queremos testear
-import { agregarGasto, removerGasto, editarGasto, empiezaAgregaGasto } from '../../acciones/gastos';
+import { agregarGasto, removerGasto, editarGasto, empiezaAgregaGasto, setGastos } from '../../acciones/gastos';
 import thunk from 'redux-thunk'; // Importaciones del middleware de redux
 import configureMockStore from 'redux-mock-store'; // Importaciones de modulos de testeo para redux
 import database from '../../firebase/firebase'; // Importamos el modulo de firebase para hacer un query
+import gastosDummy from '../fixtures/expenses'; // Importacion de los gastos dummy para uso de los test
 
 // Creamos el mock store (almacen) para testeo
 const creaAlmacenMock = configureMockStore([thunk]);
+
+// Pedazo de codigo que corre antes de cualquier test, usamos done para que espere a que termine el asaync task
+beforeEach((done) => {
+    // Creamo un objeto vacio
+    const datosGastosDummy = {};
+    // Hacemos un forEach para convertirlos
+    gastosDummy.forEach(({ id, descripcion, nota, monto, creadoEn}) => {
+        // Le asignamos un id al objeto basandonos en los datos recibido
+        datosGastosDummy[id] = {descripcion, nota, monto, creadoEn};
+    });
+    // Hacemo llamado al async task
+    database.ref('gastos').set(datosGastosDummy).then(() => done());
+});
 
 test('Deberia preparar el objeto de gasto a remover ', () => {
     const accion = removerGasto({ id: 'abc123' });
@@ -78,6 +92,16 @@ test('Deberia agregar gasto a la BDD y al almacen', (done) => {
             expect(snapshot.val()).toEqual(datosGastoDummy);    
             // Indica que espere a que se complete la async function
             done();
+    });
+});
+
+test('Deberia hacer setup al hacer set gastos acciones de objeto con dato', () => {
+    // Llamamos a la accion a testear
+    const accion = setGastos(gastosDummy);
+    // Lo que esperamos recibir de esa accion
+    expect(accion).toEqual({
+        type: 'SET_GASTOS',
+        gastos: gastosDummy
     });
 });
 

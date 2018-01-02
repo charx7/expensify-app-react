@@ -31,6 +31,10 @@ const reductorGastos = (estado = reductorGastosDefault, accion) => {
                     return elemento;
                 }
             });
+        case 'SET_GASTOS':
+            // Se debe de aniadir los gastos recibidos del query a Firebase al almacen ie, regresamos el objeto de
+            // gastos proveniente de la accion
+            return accion.gastos;
         default: 
             return estado; 
     }
