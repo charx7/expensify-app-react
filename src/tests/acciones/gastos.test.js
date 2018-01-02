@@ -1,5 +1,5 @@
 // Importamos las funciones que queremos testear
-import { agregarGasto, removerGasto, editarGasto, empiezaAgregaGasto, setGastos } from '../../acciones/gastos';
+import { agregarGasto, removerGasto, editarGasto, empiezaAgregaGasto, setGastos, empiezaSetGastos } from '../../acciones/gastos';
 import thunk from 'redux-thunk'; // Importaciones del middleware de redux
 import configureMockStore from 'redux-mock-store'; // Importaciones de modulos de testeo para redux
 import database from '../../firebase/firebase'; // Importamos el modulo de firebase para hacer un query
@@ -12,12 +12,12 @@ const creaAlmacenMock = configureMockStore([thunk]);
 beforeEach((done) => {
     // Creamo un objeto vacio
     const datosGastosDummy = {};
-    // Hacemos un forEach para convertirlos
+    // Hacemos un forEach para convertirlos NOTA: La variable de gastosDummy es la que contiene los gastos dummy para testeo
     gastosDummy.forEach(({ id, descripcion, nota, monto, creadoEn}) => {
         // Le asignamos un id al objeto basandonos en los datos recibido
         datosGastosDummy[id] = {descripcion, nota, monto, creadoEn};
     });
-    // Hacemo llamado al async task
+    // Hacemos llamado al async task
     database.ref('gastos').set(datosGastosDummy).then(() => done());
 });
 
@@ -103,6 +103,25 @@ test('Deberia hacer setup al hacer set gastos acciones de objeto con dato', () =
         type: 'SET_GASTOS',
         gastos: gastosDummy
     });
+});
+
+test('Deberia de obtener los datos de gastos de firebase', (done) => {
+    // Creamos una instacia del almacen dummy
+    const almacen = creaAlmacenMock({});
+    // Llamamos a la accion
+    almacen.dispatch(empiezaSetGastos()).then(() => {
+        const acciones = almacen.getActions();
+        console.log('valor recibido: ', acciones[0]);
+        console.log('valor que esperamos: ', gastosDummy)
+        expect(acciones[0]).toEqual({
+            type: 'SET_GASTOS',
+            // Debe ser igual a los gastos dummy definimos arriba
+            gastos: [...gastosDummy]
+        });
+        // Para que espere al resultado del async task
+        done(); 
+    });
+
 });
 
 // Hace falta hacer un default en el que se pasa un objeto vacio para verificar si corren los objetos vacios
