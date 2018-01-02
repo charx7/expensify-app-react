@@ -95,3 +95,12 @@ export const empiezaRemoverGasto = ({ id: idQuitar } = {}) => {
         }); 
     };
 };
+
+// Codigo para que haga un edit de datos a Firebase
+export const empiezaEditarGasto = (id, actualizaciones) => {
+    return (dispatch) => {
+        return database.ref(`gastos/${id}`).update(actualizaciones).then(() => {
+            dispatch(editarGasto(id, actualizaciones));
+        });
+    };
+};

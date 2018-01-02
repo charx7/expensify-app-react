@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 // Importacion de connect de React redux
 import { connect } from 'react-redux';
 import FormaGasto from  './FormaGasto'; // Importamos la forma de gasto
-import { editarGasto, empiezaRemoverGasto } from '../acciones/gastos'; // Importamos la accion de editar gasto
+import { editarGasto, empiezaRemoverGasto, empiezaEditarGasto } from '../acciones/gastos'; // Importamos la accion de editar gasto
 
 // Componente de Editar Gasto
 const EditarGastoPagina = (props) => {
@@ -16,7 +16,7 @@ const EditarGastoPagina = (props) => {
                 onSubmit = {(gasto) => {
                     console.log('Editando ', gasto);
                     // Mandar la nueva info de gasto a la accion de editar
-                    props.dispatch(editarGasto(props.match.params.id, gasto));
+                    props.dispatch(empiezaEditarGasto(props.match.params.id, gasto));
                     // Redirigir a la pagina de dashboard
                     props.history.push('/');
                 }}
