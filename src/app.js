@@ -27,7 +27,7 @@ console.log(almacen.getState());
 
 // Para obtener el estado acual del almacen
 const estado = almacen.getState();
-// Para desplegar los gastos visibles segun los criterios de filtros
+// Para desplegar los gastos visibles segun los criterios de filtros /
 const gastosVisibles = obtenerGastosVisibles(estado.gastos, estado.filtros);
 console.log(gastosVisibles);
 
